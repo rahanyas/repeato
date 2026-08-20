@@ -1,11 +1,9 @@
-import {
-  Layers
-} from "lucide-react";
+import { Layers } from "lucide-react";
 
-function Footer() {
+export default function Footer() {
   return (
     <footer className="border-t border-stone-200">
-      <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-md bg-amber-500 flex items-center justify-center">
             <span className="font-mono font-bold text-stone-900 text-xs">R</span>
@@ -19,5 +17,3 @@ function Footer() {
     </footer>
   );
 }
-
-export default Footer
