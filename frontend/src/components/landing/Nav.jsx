@@ -1,5 +1,6 @@
 import  { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Nav({ onGetStarted }) {
   const [open, setOpen] = useState(false);
@@ -30,7 +31,9 @@ export default function Nav({ onGetStarted }) {
 
         <div className="hidden md:flex items-center gap-3">
           <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">
+            <Link to='/sign-in'>
             Sign in
+            </Link>
           </button>
           <button
             onClick={onGetStarted}

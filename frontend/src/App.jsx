@@ -1,19 +1,26 @@
-import  { useState } from "react";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import SignUpPage from "./pages/SignIn";
 
-/**
- * Standalone view-switcher so this repo runs without a router installed.
- * Swap for React Router when you wire up real routes:
- *   <Route path="/" element={<Landing onGetStarted={() => navigate("/app")} />} />
- *   <Route path="/app" element={<Dashboard />} />
- */
+function LandingRoute() {
+  const navigate = useNavigate();
+  return <Landing onGetStarted={() => navigate("/app")} />;
+}
+
+function DashboardRoute() {
+  const navigate = useNavigate();
+  return <Dashboard onExit={() => navigate("/")} />;
+}
+
 export default function App() {
-  const [view, setView] = useState("landing"); // "landing" | "dashboard"
-
-  return view === "landing" ? (
-    <Landing onGetStarted={() => setView("dashboard")} />
-  ) : (
-    <Dashboard onExit={() => setView("landing")} />
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingRoute />} />
+        <Route path="/app" element={<DashboardRoute />} />
+        <Route path="/sign-in" element={<SignUpPage/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
