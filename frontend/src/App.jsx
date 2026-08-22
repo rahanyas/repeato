@@ -19,7 +19,12 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingRoute />} />
         <Route path="/app" element={<DashboardRoute />} />
-        <Route path="/sign-in" element={<SignUpPage/>}/>
+        <Route path="/sign-in" element={<SignUpPage
+  initialMode="signin"
+  onBack={() => {/* go to landing */}}
+  onAuthenticated={() => {/* go to dashboard */}}
+  onGoogleAuth={() => {/* trigger real Google OAuth */}}
+/>}/>
       </Routes>
     </BrowserRouter>
   );
