@@ -1,41 +1,11 @@
 import{ useState } from "react";
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, Loader2, Layers } from "lucide-react";
+import { Link } from "react-router-dom";
 
-function GoogleIcon() {
-  return (
-    <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        fill="#4285F4"
-        d="M23.52 12.27c0-.82-.07-1.6-.2-2.36H12v4.47h6.47c-.28 1.5-1.13 2.77-2.4 3.62v3h3.88c2.27-2.09 3.57-5.17 3.57-8.73z"
-      />
-      <path
-        fill="#34A853"
-        d="M12 24c3.24 0 5.96-1.07 7.95-2.9l-3.88-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.95H1.27v3.1C3.25 21.3 7.31 24 12 24z"
-      />
-      <path
-        fill="#FBBC05"
-        d="M5.27 14.3a7.2 7.2 0 0 1 0-4.6v-3.1H1.27a12 12 0 0 0 0 10.8l4-3.1z"
-      />
-      <path
-        fill="#EA4335"
-        d="M12 4.75c1.76 0 3.34.6 4.58 1.79l3.44-3.44C17.95 1.19 15.24 0 12 0 7.31 0 3.25 2.7 1.27 6.6l4 3.1C6.22 6.86 8.87 4.75 12 4.75z"
-      />
-    </svg>
-  );
-}
+import GoogleIcon from "../components/shared/GoogleIcon";
+import Stamp from "../components/shared/Stamp";
 
-function Stamp({ confidence = 92 }) {
-  return (
-    <div className="w-16 h-16 shrink-0 flex flex-col items-center justify-center rounded-full border-2 border-dashed border-amber-500 text-amber-700 bg-amber-50/60 -rotate-6 select-none">
-      <span className="font-mono font-bold leading-none text-base">{confidence}%</span>
-      <span className="font-mono text-[8px] tracking-widest mt-1 text-center leading-tight px-1">
-        LIKELY
-        <br />
-        REPEAT
-      </span>
-    </div>
-  );
-}
+
 
 /**
  * Params:
@@ -49,6 +19,15 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const isSignUp = mode === "signup";
+
+  const [data, setData] = useState({
+    name : '',
+    email : '',
+    pass : ''
+  })
+
+  console.log(data)
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -79,7 +58,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
           </h2>
           <div className="flex items-center gap-4 mt-8">
             <Stamp confidence={92} />
-            <p className="text-sm text-stone-400 leading-relaxed max-w-[220px]">
+            <p className="text-sm text-stone-400 leading-relaxed max-w-55">
               Deadlock in Operating Systems — seen 7× since 2019, due again this term.
             </p>
           </div>
@@ -104,7 +83,9 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
             <span className="font-semibold tracking-tight">Recurra</span>
           </button>
           <button onClick={onBack} className="text-sm text-stone-500 hover:text-stone-800 transition-colors">
+            <Link to="/">
             Back to home
+            </Link>
           </button>
         </div>
 
@@ -149,6 +130,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
                     placeholder="Full name"
                     autoComplete="name"
                     required
+                    onChange={(e) => setData(prev => ({...prev, name : e.target.value }))}
                     className="w-full pl-9 pr-3 py-2.5 sm:py-3 text-sm rounded-md border border-stone-300 bg-white placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
                   />
                 </div>
@@ -162,6 +144,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
                   placeholder="Email address"
                   autoComplete="email"
                   required
+                  onChange={(e) => setData(prev => ({...prev, email : e.target.value}))}
                   className="w-full pl-9 pr-3 py-2.5 sm:py-3 text-sm rounded-md border border-stone-300 bg-white placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
                 />
               </div>
@@ -174,6 +157,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
                   placeholder="Password"
                   autoComplete={isSignUp ? "new-password" : "current-password"}
                   required
+                  onChange={(e) => setData(prev => ({...prev, pass : e.target.value}))}
                   className="w-full pl-9 pr-10 py-2.5 sm:py-3 text-sm rounded-md border border-stone-300 bg-white placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
                 />
                 <button
@@ -210,7 +194,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
 
               {isSignUp && (
                 <p className="text-[11px] text-stone-400 text-center leading-relaxed">
-                  By creating an account you agree to Recurra's Terms of Service and Privacy Policy.
+                  By creating an account you agree to Repeato's Terms of Service and Privacy Policy.
                 </p>
               )}
 
