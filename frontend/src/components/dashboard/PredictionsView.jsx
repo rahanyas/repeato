@@ -1,3 +1,4 @@
+
 import { Filter, Clock } from "lucide-react";
 import ConfidenceBar from "../shared/ConfidenceBar";
 import { predictions } from "../../data/mockData";

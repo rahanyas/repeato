@@ -1,4 +1,4 @@
-import { useState } from "react";
+import  { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Highlight from "../shared/Highlight";
 import { clusters } from "../../data/mockData";
@@ -22,11 +22,12 @@ export default function ClustersView() {
                     {c.subject}
                   </span>
                   <span className="text-[11px] font-mono text-stone-500">{c.marks} marks</span>
+                  <span className="text-[11px] font-mono text-stone-500 sm:hidden">· {c.occurrences}× seen</span>
                 </div>
                 <p className="text-stone-900 font-medium text-sm sm:text-base truncate">{c.canonical}</p>
               </div>
               <div className="flex items-center gap-3 sm:gap-6 shrink-0">
-                <div className="text-right hidden xs:block sm:block">
+                <div className="text-right hidden sm:block">
                   <p className="font-mono text-base sm:text-lg font-bold text-stone-900">{c.occurrences}×</p>
                   <p className="text-[10px] sm:text-[11px] text-stone-500">since {2025 - c.occurrences < 2019 ? 2019 : 2025 - c.occurrences}</p>
                 </div>

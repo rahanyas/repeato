@@ -14,7 +14,7 @@ export default function Hero({ onGetStarted }) {
           <span className="text-stone-400">We show you how.</span>
         </h1>
         <p className="mt-5 sm:mt-6 text-base sm:text-lg text-stone-600 leading-relaxed max-w-md">
-          Upload past question papers and Recurra finds every question that keeps
+          Upload past question papers and Repeato finds every question that keeps
           coming back — reworded, reordered, but never really new — and tells you
           which ones are due again this year.
         </p>

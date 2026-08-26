@@ -1,6 +1,6 @@
 import{ useState } from "react";
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, Loader2, Layers } from "lucide-react";
-import { Link } from "react-router-dom";
+
 
 import GoogleIcon from "../components/shared/GoogleIcon";
 import Stamp from "../components/shared/Stamp";
@@ -47,7 +47,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
           <div className="w-7 h-7 rounded-md bg-amber-500 flex items-center justify-center">
             <span className="font-mono font-bold text-stone-900 text-sm">R</span>
           </div>
-          <span className="font-semibold text-white tracking-tight">Recurra</span>
+          <span className="font-semibold text-white tracking-tight">Repeato</span>
         </div>
 
         <div>
@@ -59,7 +59,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
           <div className="flex items-center gap-4 mt-8">
             <Stamp confidence={92} />
             <p className="text-sm text-stone-400 leading-relaxed max-w-55">
-              Deadlock in Operating Systems — seen 7× since 2019, due again this term.
+              Deadlock in Operating Systems — seen 7× since 2015, due again this term.
             </p>
           </div>
         </div>
@@ -82,10 +82,8 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
             </div>
             <span className="font-semibold tracking-tight">Recurra</span>
           </button>
-          <button onClick={onBack} className="text-sm text-stone-500 hover:text-stone-800 transition-colors">
-            <Link to="/">
+          <button onClick={onBack} className="text-sm text-stone-500 hover:text-stone-800 transition-colors">         
             Back to home
-            </Link>
           </button>
         </div>
 

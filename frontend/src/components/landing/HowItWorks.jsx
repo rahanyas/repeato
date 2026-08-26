@@ -5,13 +5,13 @@ const steps = [
     n: "01",
     icon: UploadCloud,
     title: "Upload past papers",
-    body: "Drop in PDFs or scanned copies from as many years as you have. Recurra reads and splits each one into individual questions automatically.",
+    body: "Drop in PDFs or scanned copies from as many years as you have. Repeato reads and splits each one into individual questions automatically.",
   },
   {
     n: "02",
     icon: ScanSearch,
     title: "Questions get matched",
-    body: "Same question asked five different ways is still the same question. Recurra groups reworded variants into a single cluster and tracks it across years.",
+    body: "Same question asked five different ways is still the same question. Repeato groups reworded variants into a single cluster and tracks it across years.",
   },
   {
     n: "03",

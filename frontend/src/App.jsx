@@ -11,20 +11,29 @@ function LandingRoute() {
 function DashboardRoute() {
   const navigate = useNavigate();
   return <Dashboard onExit={() => navigate("/")} />;
+};
+
+
+function SiginInRoute(){
+  const navigate = useNavigate()
+  return (
+    <SignUpPage 
+    initialMode="signin"
+    onBack={() => navigate('/')}
+    onAuthenticated={() => {/* go to dashboard */}}
+    onGoogleAuth={() => {/* trigger real Google OAuth */}}
+    />
+  )
 }
 
 export default function App() {
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingRoute />} />
         <Route path="/app" element={<DashboardRoute />} />
-        <Route path="/sign-in" element={<SignUpPage
-  initialMode="signin"
-  onBack={() => {/* go to landing */}}
-  onAuthenticated={() => {/* go to dashboard */}}
-  onGoogleAuth={() => {/* trigger real Google OAuth */}}
-/>}/>
+        <Route path='/sign-in' element={<SiginInRoute/>}/>
       </Routes>
     </BrowserRouter>
   );

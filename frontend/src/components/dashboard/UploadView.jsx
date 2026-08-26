@@ -20,12 +20,12 @@ export default function UploadView() {
             </div>
             {f.status === "done" ? (
               <span className="flex items-center gap-1.5 text-xs font-mono text-teal-700 shrink-0">
-                <CheckCircle2 className="w-3.5 h-3.5" /> <span className="hidden xs:inline">parsed</span>
+                <CheckCircle2 className="w-3.5 h-3.5" /> <span className="hidden sm:inline">parsed</span>
               </span>
             ) : (
               <span className="flex items-center gap-1.5 text-xs font-mono text-amber-600 shrink-0">
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                <span className="hidden xs:inline">extracting questions…</span>
+                <span className="hidden sm:inline">extracting questions…</span>
               </span>
             )}
           </div>

@@ -1,9 +1,5 @@
 
 
-/**
- * The recurring "exam stamp" signature element.
- * size: "sm" | "md" | "lg" — scales down automatically on narrow screens.
- */
 export default function Stamp({ confidence = 92, size = "md" }) {
   const dims = {
     sm: "w-16 h-16",

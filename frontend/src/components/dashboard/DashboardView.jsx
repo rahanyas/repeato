@@ -45,15 +45,15 @@ export default function DashboardView() {
         </div>
 
         <div className="lg:col-span-2 bg-stone-900 rounded-lg p-5 sm:p-6 text-stone-100">
-          <h3 className="font-semibold mb-1 text-sm sm:text-base">Top pick this term</h3>
-          <p className="text-xs text-stone-400 font-mono mb-5">Operating Systems · 10 marks</p>
+          <h3 className="font-semibold mb-1">Top pick this term</h3>
+          <p className="text-xs text-stone-400 font-mono mb-4 sm:mb-5">Operating Systems · 10 marks</p>
           <div className="flex items-center gap-4">
-            <Stamp confidence={92} size="md" />
+            <Stamp confidence={92} />
             <p className="text-sm leading-relaxed text-stone-200">
               Explain deadlock and the necessary conditions for its occurrence.
             </p>
           </div>
-          <div className="mt-5 pt-5 border-t border-stone-700 text-xs font-mono text-stone-400 flex flex-col xs:flex-row justify-between gap-1">
+          <div className="mt-5 pt-5 border-t border-stone-700 text-xs font-mono text-stone-400 flex flex-col sm:flex-row justify-between gap-1">
             <span>Seen 7× since 2019</span>
             <span>Repeats every ~2 yrs</span>
           </div>

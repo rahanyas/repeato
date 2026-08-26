@@ -1,8 +1,6 @@
-
-
 export default function Highlight({ children }) {
   return (
-    <mark className="bg-amber-200/60 text-inherit px-0.5 rounded-sm decoration-clone">
+    <mark className="bg-amber-200/60 text-inherit px-0.5 rounded-sm box-decoration-clone">
       {children}
     </mark>
   );

@@ -2,7 +2,9 @@ import  { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function Nav({ onGetStarted }) {
+
+
+export default function Nav({ onGetStarted, onSignIn }) {
   const [open, setOpen] = useState(false);
 
   const links = [
@@ -18,7 +20,7 @@ export default function Nav({ onGetStarted }) {
           <div className="w-7 h-7 rounded-md bg-amber-500 flex items-center justify-center">
             <span className="font-mono font-bold text-stone-900 text-sm">R</span>
           </div>
-          <span className="font-semibold text-stone-900 tracking-tight">Recurra</span>
+          <span className="font-semibold text-stone-900 tracking-tight">Repeato</span>
         </div>
 
         <nav className="hidden md:flex items-center gap-8 text-sm text-stone-600 font-medium">
@@ -30,10 +32,12 @@ export default function Nav({ onGetStarted }) {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">
-            <Link to='/sign-in'>
-            Sign in
-            </Link>
+          <button
+            onClick={onSignIn}
+            className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors"
+          >
+           <Link to="/sign-in">
+            Sign in</Link>
           </button>
           <button
             onClick={onGetStarted}
@@ -63,7 +67,15 @@ export default function Nav({ onGetStarted }) {
             ))}
           </nav>
           <div className="flex flex-col gap-2 pt-2 border-t border-stone-200">
-            <button className="text-sm font-medium text-stone-600 text-left py-1">Sign in</button>
+            <button
+              onClick={() => {
+                setOpen(false);
+                onSignIn?.();
+              }}
+              className="text-sm font-medium text-stone-600 text-left py-1"
+            >
+              Sign in
+            </button>
             <button
               onClick={() => {
                 setOpen(false);

@@ -1,3 +1,4 @@
+
 import { LayoutGrid, Layers, TrendingUp, UploadCloud, X } from "lucide-react";
 import { subjects } from "../../data/mockData";
 
@@ -21,7 +22,7 @@ export default function Sidebar({ tab, setTab, activeSubject, setActiveSubject, 
             <div className="w-7 h-7 rounded-md bg-amber-500 flex items-center justify-center">
               <span className="font-mono font-bold text-stone-900 text-sm">R</span>
             </div>
-            <span className="font-semibold text-white tracking-tight">Recurra</span>
+            <span className="font-semibold text-white tracking-tight">Repeato</span>
           </button>
           <p className="text-[11px] font-mono text-stone-500 mt-2">question repetition engine</p>
         </div>
