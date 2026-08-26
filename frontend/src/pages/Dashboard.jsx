@@ -12,7 +12,7 @@ export default function Dashboard({ onExit }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 flex font-sans">
+    <div className="min-h-screen bg-stone-50 text-stone-900 flex font-sans overflow-x-hidden">
       <Sidebar
         tab={tab}
         setTab={setTab}

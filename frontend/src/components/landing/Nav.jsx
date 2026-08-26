@@ -1,6 +1,6 @@
 import  { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 
 
@@ -36,8 +36,9 @@ export default function Nav({ onGetStarted, onSignIn }) {
             onClick={onSignIn}
             className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors"
           >
-           <Link to="/sign-in">
-            Sign in</Link>
+           {/* <Link to="/sign-in"> */}
+            Sign in
+            {/* </Link> */}
           </button>
           <button
             onClick={onGetStarted}
