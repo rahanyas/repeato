@@ -20,7 +20,7 @@ function SiginInRoute(){
     <SignUpPage 
     initialMode="signin"
     onBack={() => navigate('/')}
-    onAuthenticated={() => {/* go to dashboard */}}
+    onAuthenticated={() => navigate('/app')}
     onGoogleAuth={() => {/* trigger real Google OAuth */}}
     />
   )

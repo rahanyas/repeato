@@ -5,7 +5,7 @@ import { Mail, Lock, User, Eye, EyeOff, ArrowRight, Loader2, Layers } from "luci
 import GoogleIcon from "../components/shared/GoogleIcon";
 import Stamp from "../components/shared/Stamp";
 
-
+import axiosInstance from "../utils/axiosWrapper";
 
 /**
  * Params:
@@ -13,7 +13,10 @@ import Stamp from "../components/shared/Stamp";
  * - onAuthenticated: called after email/password submit succeeds
  * - onGoogleAuth: called when the Google button is clicked
  * - onBack: called when the user taps the logo/back link
- */
+*/
+
+
+
 export default function SignUpPage({ initialMode = "signin", onAuthenticated, onBack, onGoogleAuth }) {
   const [mode, setMode] = useState(initialMode);
   const [showPassword, setShowPassword] = useState(false);
@@ -26,17 +29,36 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
     pass : ''
   })
 
-  console.log(data)
+//  async function siginIn(data){
+//   try {
+//     const res = await axiosInstance.post('/api/auth/sigin-in', data)
+//   } catch (err) {
+//     console.log('err from sign-in func ',err)
+//   }
+// }
 
 
-  const handleSubmit = (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    try {
+      const res = await axiosInstance.post('/api/auth/sign-in', data);
+      console.log('res from handle submut : ', res)
+      if(res.status === 200){
+        setLoading(false);
+        onAuthenticated?.()
+      }
+    } catch (err) {
+      console.log('err from sign-in func : ', err)
+      setLoading(false)
+    }finally{
+      setLoading(false)
+    }
     // Wire this up to your real auth call — mocked here with a short delay.
-    setTimeout(() => {
-      setLoading(false);
-      onAuthenticated?.();
-    }, 600);
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   onAuthenticated?.();
+    // }, 600);
   };
 
   return (
