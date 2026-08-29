@@ -29,7 +29,7 @@ export const signUp = async (req, res) => {
     }
     
     const newUser = await userModal.create({
-      name,
+      userName : name,
       email,
       pass: hashedPass
     });
