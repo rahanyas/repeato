@@ -2,7 +2,6 @@ import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import SignUpPage from "./pages/SignIn";
-import Message from "./components/shared/Message";
 
 function LandingRoute() {
   const navigate = useNavigate();
@@ -34,11 +33,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingRoute />} />
         <Route path="/app" element={<DashboardRoute />} />
-        <Route path='/sign-in' element={
-          <SiginInRoute>
-            <Message />
-          </SiginInRoute>
-          }/>
+        <Route path='/sign-in' element={<SiginInRoute/> }/>
       </Routes>
     </BrowserRouter>
   );
