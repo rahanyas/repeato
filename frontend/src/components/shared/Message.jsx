@@ -1,18 +1,23 @@
+import { useMessage } from "../../context/Message.context";
 
-const Message = ({ type, message }) => {
-  if (!message) return null;
+const Message = () => {
+  const { message } = useMessage();
 
-  const styles =
-    type === "success"
-      ? "bg-green-100 text-green-700 border-green-300"
-      : "bg-red-100 text-red-700 border-red-300";
+  console.log("MESSAGE COMPONENT:", message);
+
+  if (!message.text) return null;
 
   return (
-    <div className={`border rounded-md px-4 py-3 text-sm ${styles}`}>
-      {message}
+    <div
+      className={`fixed top-5 right-5 z-50 p-4 rounded ${
+        message.type === "success"
+          ? "bg-green-500"
+          : "bg-red-500"
+      }`}
+    >
+      {message.text}
     </div>
   );
 };
 
 export default Message;
-

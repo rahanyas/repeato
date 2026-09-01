@@ -6,6 +6,7 @@ import GoogleIcon from "../components/shared/GoogleIcon";
 import Stamp from "../components/shared/Stamp";
 
 import axiosInstance from "../utils/axiosWrapper";
+import { useMessage } from "../context/Message.context";
 
 /**
  * Params:
@@ -22,6 +23,8 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const isSignUp = mode === "signup";
+
+  const { showMessage, message } = useMessage();
 
   const [data, setData] = useState({
     name : '',
@@ -45,12 +48,13 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
       const res = await axiosInstance.post('/api/auth/sign-in', data);
       console.log('res from handle submut : ', res)
       if(res.status === 200){
-        setLoading(false);
-        onAuthenticated?.()
+        showMessage(res?.data?.msg, 'success');
+        console.log('show message ', message)
+        onAuthenticated?.();
       }
     } catch (err) {
-      console.log('err from sign-in func : ', err)
-      setLoading(false)
+      console.log('err from sign-in func : ', err);
+      showMessage(err.response?.data?.msg || 'Login Failed', "error")
     }finally{
       setLoading(false)
     }
