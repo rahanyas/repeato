@@ -47,7 +47,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
     try {
       const res = await axiosInstance.post('/api/auth/sign-in', data);
       console.log('res from handle submut : ', res)
-      if(res.status === 200){
+      if(res.status === 201){
         showMessage(res?.data?.msg, 'success');
         console.log('show message ', message)
         onAuthenticated?.();
