@@ -15,7 +15,14 @@ export const MessageProvider = ({children}) => {
     setMessage({
       text, 
       type
-    })
+    });
+
+    setTimeout(() => {
+       setMessage({
+        text : '',
+        type : ''
+       });
+    }, 3000);
   };
 
   const clearMessage = () => {

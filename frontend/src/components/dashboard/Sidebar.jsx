@@ -1,5 +1,5 @@
 
-import { LayoutGrid, Layers, TrendingUp, UploadCloud, X } from "lucide-react";
+import { LayoutGrid, Layers, TrendingUp, UploadCloud, X, LogOutIcon } from "lucide-react";
 import { subjects } from "../../data/mockData";
 
 const nav = [
@@ -7,9 +7,10 @@ const nav = [
   { id: "clusters", label: "Clusters", icon: Layers },
   { id: "predictions", label: "Predictions", icon: TrendingUp },
   { id: "upload", label: "Upload", icon: UploadCloud },
+  {id : 'logout', label : 'Logout', icon : LogOutIcon}
 ];
 
-export default function Sidebar({ tab, setTab, activeSubject, setActiveSubject, open, onClose, onExit }) {
+export default function Sidebar({ tab, setTab, activeSubject, setActiveSubject, open, onClose, onExit, onLogout }) {
   const content = (
     <>
       <div className="px-5 py-6 border-b border-stone-800 flex items-center justify-between">
@@ -36,6 +37,11 @@ export default function Sidebar({ tab, setTab, activeSubject, setActiveSubject, 
           <button
             key={n.id}
             onClick={() => {
+              if(n.id === 'logout'){
+                onLogout?.();
+                onClose?.();
+                return
+              }
               setTab(n.id);
               onClose?.();
             }}

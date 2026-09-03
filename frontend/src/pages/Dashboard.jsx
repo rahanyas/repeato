@@ -5,12 +5,22 @@ import DashboardView from "../components/dashboard/DashboardView";
 import ClustersView from "../components/dashboard/ClustersView";
 import PredictionsView from "../components/dashboard/PredictionsView";
 import UploadView from "../components/dashboard/UploadView";
+import axiosInstance from "../utils/axiosWrapper";
 
 export default function Dashboard({ onExit }) {
   const [tab, setTab] = useState("dashboard");
   const [activeSubject, setActiveSubject] = useState("All subjects");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  async function Logout(){
+    try {
+      const res = await axiosInstance.post('/api/auth/logout');
+      console.log('res from logut : ', res)
+    } catch (err) {
+      console.log('error in Logout : ', err)
+    }
+  }
+ 
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900 flex font-sans overflow-x-hidden">
       <Sidebar
@@ -21,6 +31,7 @@ export default function Dashboard({ onExit }) {
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         onExit={onExit}
+        onLogout={Logout}
       />
 
       <main className="flex-1 flex flex-col min-w-0">
