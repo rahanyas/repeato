@@ -1,6 +1,8 @@
 import { passHashing, verifyPass } from "../helpers/passHash.helpers.js";
 import isValid from '../helpers/credentials.helpers.js';
 import userModal from "../model/auth.model.js";
+import createToken from "../helpers/tokenCreation.js";
+import jwt from 'jsonwebtoken';
 
 export const signUp = async (req, res) => {
   try {
@@ -18,6 +20,7 @@ export const signUp = async (req, res) => {
 
     const isExistingUser = await userModal.findOne({email : email});
     if(isExistingUser){
+      console.log('existing user')
       return res.status(409).json({msg : 'user already exist... please login'})
     }
 
@@ -34,7 +37,8 @@ export const signUp = async (req, res) => {
       pass: hashedPass
     });
 
-
+    createToken(newUser._id, res);
+    
     return res.status(201).json({msg : 'successfully logedIn'});
 
   } catch (err) {

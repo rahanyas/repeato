@@ -2,6 +2,8 @@ import express from 'express';
 import cors from  'cors';
 import authRouter from './router/auth.router.js';
 import connect_db from './utils/db_connection.js';
+import cookieParser from 'cookie-parser';
+
 
 const app = express();
 const PORT  = process.env.PORT || 8000;
@@ -10,6 +12,8 @@ const baseUrl = process.env.NODE_DEV === 'dev' ? process.env.DEV_API : process.e
 console.log(baseUrl);
 
 await connect_db(db_uri)
+
+app.use(cookieParser());
 
 app.use(cors({
   origin : baseUrl,
