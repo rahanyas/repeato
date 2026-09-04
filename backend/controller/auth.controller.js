@@ -45,4 +45,40 @@ export const signUp = async (req, res) => {
     console.log('err from sign in controller : ', err);
     return res.status(500).json({msg :'something went wrong... please try again' })
   }
+};
+
+export const login = async (req, res) => {
+  try {
+    const {email, pass} = req.body;
+
+    const validEmailChecking = isValid(email);
+
+    if(!email || !pass){
+      return res.status(400).json({msg : 'please provide credentails'});
+    };
+
+    if(validEmailChecking !== true){
+      return res.status(400).json({msg : 'please enter a valid email'});
+    };
+
+
+    const isUser = await userModal.findOne({email : email});
+    if(!isUser){
+      return res.status(400).json({msg : 'User not Exist..., Please Sign-In'});
+    };
+
+    const passVerifying = await verifyPass(isUser.pass, pass);
+
+    if(!passVerifying){
+      return res.status(400).json({msg : 'Invalid Credentials'});
+    };
+
+    createToken(isUser._id ,res)
+
+    return res.status(201).json({msg : 'successfully Loged-in'})
+
+  } catch (err) {
+    console.log('error in login function : ', err);
+    return res.status(500).json({msg : 'Internal Server Error'});
+  }
 }
