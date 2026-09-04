@@ -41,7 +41,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
 // }
 
 
- const handleSubmit = async (e) => {
+ const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -54,7 +54,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
       }
     } catch (err) {
       console.log('err from sign-in func : ', err);
-      showMessage(err.response?.data?.msg || 'Login Failed', "error")
+      showMessage(err.response?.data?.msg || 'Sign-in Failed', "error")
     }finally{
       setLoading(false)
     }
@@ -64,6 +64,26 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
     //   onAuthenticated?.();
     // }, 600);
   };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true)
+    try {
+      // const{email, pass} = data;
+      // if(!email || pass){
+      //   return showMessage('please provide all credentiasl', 'error')
+      // }
+      const res = await axiosInstance.post('/api/auth/login', data);
+      console.log('res from login : ', res);
+      showMessage(res?.data?.msg, 'success');
+      onAuthenticated?.();
+    } catch (err) {
+      console.log('error in login function : ', err);
+      showMessage(err.response?.data?.msg || 'Login Failed', "error")
+    }finally{
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen flex bg-stone-50">
@@ -106,7 +126,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
             <div className="w-7 h-7 rounded-md bg-amber-500 flex items-center justify-center">
               <span className="font-mono font-bold text-stone-900 text-sm">R</span>
             </div>
-            <span className="font-semibold tracking-tight">Recurra</span>
+            <span className="font-semibold tracking-tight">Repeato</span>
           </button>
           <button onClick={onBack} className="text-sm text-stone-500 hover:text-stone-800 transition-colors">         
             Back to home
@@ -144,7 +164,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={isSignUp  ? handleSignIn : handleLogin} className="space-y-4">
               {isSignUp && (
                 <div className="relative">
                   <User className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
