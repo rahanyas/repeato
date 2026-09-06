@@ -16,20 +16,35 @@ function LandingRoute() {
   return <Landing onGetStarted={() => navigate("/app")} />;
 };
 
-function DashboardRoute() {
+function DashboardRoute({onLogout}) {
   const navigate = useNavigate();
-  return <Dashboard onExit={() => navigate("/")} />;
+
+  const handleLogout = async ()=> {
+    const success = await onLogout();
+    if(success){
+      navigate('/')
+    }
+  }
+  return <Dashboard onExit={() => navigate("/")}  onLogout={handleLogout}/>;
 };
 
 
-function SiginInRoute(){
+function SiginInRoute({onAuthenticated}){
   const navigate = useNavigate();
+
+ const handleAuthenticated = async () => {
+  const success = onAuthenticated();
+
+  if(success){
+    navigate('/app')
+  }
+ }
 
   return (
     <SignUpPage 
     initialMode="signin"
     onBack={() => navigate('/')}
-    onAuthenticated={() => navigate('/app')}
+    onAuthenticated={handleAuthenticated}
     onGoogleAuth={() => {/* trigger real Google OAuth */}}
     />
   )
@@ -40,25 +55,49 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const {showMessage} = useMessage()
+  const {showMessage, setLogedIn} = useMessage()
+
+  const checkAuth = async () => {
+    try {
+      const res = await axiosInstance.get('/api/auth/checkauth');
+      setUser(res?.data?.user?.id);
+      setLogedIn(true);
+      console.log('res from checkauth : ', res);
+      return true
+    } catch (err) {
+      console.log('err in checkAuth : ', err);
+      setLogedIn(false)
+      showMessage(err?.data?.msg ||'Please Login');
+      setUser(null);
+      return false
+    }finally{
+      setLoading(false)
+    }
+  };
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await axiosInstance.get('/api/auth/checkauth');
-        setUser(res?.data?.user?.id);
-        console.log('res from checkauth : ', res)
-      } catch (err) {
-        console.log('err in checkAuth : ', err);
-        showMessage(err?.data?.msg ||'Please Login');
-        setUser(null)
-      }finally{
-        setLoading(false)
-      }
-    };
-
     checkAuth()
   },[]);
+
+  const Logout = async () => {
+    try {
+      const res = await axiosInstance.post('/api/auth/logout');
+      console.log('res from logout: ', res);
+      if(res.status === 200){
+        setUser(null);
+        setLogedIn(false);
+        showMessage(res?.data?.msg || "successfully Loged out");
+
+        return true;
+      };
+
+      return false;
+    } catch (err) {
+      console.log('error in Logout func : ', err);
+      showMessage(err?.data?.msg || 'Logout Failed');
+      return false
+    }
+  }
 
   if(loading === true){
     return <RouteLoading/>
@@ -75,13 +114,13 @@ export default function App() {
 
         {/* public routes like sigin */}
         <Route element={<PublicRoutes user={user} loading={loading}/>}>
-        <Route path='/sign-in' element={<SiginInRoute/> }/>
+        <Route path='/sign-in' element={<SiginInRoute onAuthenticated={checkAuth}/> }/>
         </Route>
 
         {/* protected routes like dashboard  */}
         <Route element={<ProtectedRoutes user={user} loading={loading}/>}>
 
-        <Route path="/app" element={<DashboardRoute />} />
+        <Route path="/app" element={<DashboardRoute  onLogout={Logout}/>} />
         </Route>
 
         <Route path="*" element={<RouteError/>}/>

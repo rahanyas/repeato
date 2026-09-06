@@ -1,5 +1,6 @@
 import  { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useMessage } from "../../context/Message.context";
 // import { Link } from "react-router-dom";
 
 
@@ -12,6 +13,8 @@ export default function Nav({ onGetStarted, onSignIn }) {
     { href: "#product", label: "Product" },
     { href: "#faq", label: "FAQ" },
   ];
+
+  const {logedInStatus} = useMessage();
 
   return (
     <header className="border-b border-stone-800/10 bg-stone-50/90 backdrop-blur sticky top-0 z-20">
@@ -31,6 +34,8 @@ export default function Nav({ onGetStarted, onSignIn }) {
           ))}
         </nav>
 
+          {
+            logedInStatus === false && (
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={onSignIn}
@@ -47,6 +52,8 @@ export default function Nav({ onGetStarted, onSignIn }) {
             Get started
           </button>
         </div>
+            )
+          }
 
         <button
           className="md:hidden p-2 -mr-2 text-stone-700"
@@ -68,6 +75,8 @@ export default function Nav({ onGetStarted, onSignIn }) {
             ))}
           </nav>
           <div className="flex flex-col gap-2 pt-2 border-t border-stone-200">
+            {
+              logedInStatus === false && (
             <button
               onClick={() => {
                 setOpen(false);
@@ -77,6 +86,8 @@ export default function Nav({ onGetStarted, onSignIn }) {
             >
               Sign in
             </button>
+              )
+            }
             <button
               onClick={() => {
                 setOpen(false);

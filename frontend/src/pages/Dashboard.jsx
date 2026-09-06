@@ -5,21 +5,28 @@ import DashboardView from "../components/dashboard/DashboardView";
 import ClustersView from "../components/dashboard/ClustersView";
 import PredictionsView from "../components/dashboard/PredictionsView";
 import UploadView from "../components/dashboard/UploadView";
-import axiosInstance from "../utils/axiosWrapper";
+// import axiosInstance from "../utils/axiosWrapper";
+// import { useNavigate } from "react-router-dom";
+// import { useMessage } from "../context/Message.context";
 
-export default function Dashboard({ onExit }) {
+export default function Dashboard({ onExit , onLogout}) {
   const [tab, setTab] = useState("dashboard");
   const [activeSubject, setActiveSubject] = useState("All subjects");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // const navigate = useNavigate();
 
-  async function Logout(){
-    try {
-      const res = await axiosInstance.post('/api/auth/logout');
-      console.log('res from logut : ', res)
-    } catch (err) {
-      console.log('error in Logout : ', err)
-    }
-  };
+  // const {setLogedIn} = useMessage();
+
+  
+  // async function Logout(){
+  //   try {
+  //     const res = await axiosInstance.post('/api/auth/logout');
+  //     setLogedIn(false)
+  //     console.log('res from logut : ', res)
+  //   } catch (err) {
+  //     console.log('error in Logout : ', err)
+  //   }
+  // };
  
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900 flex font-sans overflow-x-hidden">
@@ -31,7 +38,7 @@ export default function Dashboard({ onExit }) {
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         onExit={onExit}
-        onLogout={Logout}
+        onLogout={onLogout}
       />
 
       <main className="flex-1 flex flex-col min-w-0">

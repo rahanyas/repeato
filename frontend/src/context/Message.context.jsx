@@ -10,6 +10,12 @@ export const MessageProvider = ({children}) => {
     type : ''
   });
 
+  const [logedInStatus, setLogedInStaus] = useState(false);
+
+  const setLogedIn = (status) => {
+    setLogedInStaus(status);
+  }
+
   const showMessage = (text, type) => {
     setMessage({
       text, 
@@ -36,7 +42,9 @@ export const MessageProvider = ({children}) => {
      value={{
         message,
         showMessage,
-        clearMessage
+        clearMessage,
+        logedInStatus,
+        setLogedIn
       }}
     >
      {children}
