@@ -11,7 +11,6 @@ export const MessageProvider = ({children}) => {
   });
 
   const showMessage = (text, type) => {
-    console.log('show message : ', type, text)
     setMessage({
       text, 
       type

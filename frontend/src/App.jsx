@@ -33,7 +33,7 @@ function SiginInRoute(){
     onGoogleAuth={() => {/* trigger real Google OAuth */}}
     />
   )
-}
+};
 
 export default function App() {
 

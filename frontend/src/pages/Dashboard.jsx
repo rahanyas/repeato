@@ -19,7 +19,7 @@ export default function Dashboard({ onExit }) {
     } catch (err) {
       console.log('error in Logout : ', err)
     }
-  }
+  };
  
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900 flex font-sans overflow-x-hidden">

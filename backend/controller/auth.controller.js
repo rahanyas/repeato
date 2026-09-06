@@ -81,4 +81,24 @@ export const login = async (req, res) => {
     console.log('error in login function : ', err);
     return res.status(500).json({msg : 'Internal Server Error'});
   }
+};
+
+export const Logout = async (req, res) => {
+  try {
+    let token = req?.cookies?.token;
+    if(!token){
+      return res.status(401).json({msg : 'User is not Authorized'})
+    };
+
+    res.clearCookie('token', {
+      secure :process.env.NODE_DEV !== 'dev',
+      sameSite : process.env.NODE_DEV !== 'dev' ? 'None' : 'Lax' ,
+      httpOnly : true
+    });
+
+    return res.status(200).json({msg : 'Logged Out Successfully'});
+  } catch (err) {
+    console.log('error in Logout function : ', err);
+    return res.status(500).json({msg : 'Internal Server Error'});
+  }
 }

@@ -3,7 +3,7 @@ import { useMessage } from "../../context/Message.context";
 const Message = () => {
   const { message } = useMessage();
 
-  console.log("MESSAGE COMPONENT:", message);
+  // console.log("MESSAGE COMPONENT:", message);
 
   if (!message.text) return null;
 
