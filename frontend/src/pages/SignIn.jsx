@@ -45,11 +45,16 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
     e.preventDefault();
     setLoading(true);
     try {
+      const {pass} = data;
+
+      if(pass.length <= 8){
+        showMessage('Password Must Be 8 charecter Long...', 'error');
+        return
+      }
       const res = await axiosInstance.post('/api/auth/sign-in', data);
       console.log('res from handle submut : ', res)
       if(res.status === 201){
-        showMessage(res?.data?.msg, 'success');
-        console.log('show message ', message)
+        showMessage(res?.data?.msg, 'success')
         onAuthenticated?.();
       }
     } catch (err) {

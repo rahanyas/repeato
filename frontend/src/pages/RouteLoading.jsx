@@ -11,7 +11,7 @@ export default function RouteLoading() {
         </h2>
 
         <p className="mt-1 text-sm text-slate-400">
-          Checking your session
+          Please Wait ...
         </p>
       </div>
     </div>
