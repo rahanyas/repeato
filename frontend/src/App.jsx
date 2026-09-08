@@ -9,7 +9,7 @@ import axiosInstance from "./utils/axiosWrapper";
 import { ProtectedRoutes, PublicRoutes } from "./routes/Public&Protected.routes";
 import  RouteError  from "./pages/RouteStatus";
 import RouteLoading from "./pages/RouteLoading";
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function LandingRoute() {
   const navigate = useNavigate();
@@ -45,10 +45,39 @@ function SiginInRoute({onAuthenticated}){
     initialMode="signin"
     onBack={() => navigate('/')}
     onAuthenticated={handleAuthenticated}
-    onGoogleAuth={() => {/* trigger real Google OAuth */}}
     />
   )
 };
+
+
+// function GoogleAuth({onAuthenticated}){
+//   const googleLogin = useGoogleLogin({
+//     onSuccess : async (response) => {
+//       try {
+//         console.log('Google response', response);
+
+//         const res = await axiosInstance.post('/api/auth/google',
+//           {
+//             credential : response.credential
+//           },
+//           {
+//             withCredentials : true
+//           }
+//         );
+//         console.log('google backend response : ', res);
+//         if(res.status === 200 ||res.status === 201){
+//           await onAuthenticated();
+//         }
+//       } catch (err) {
+//         console.error('Google authentication error : ', err.response?.data || err);
+//       }
+//     },
+//     onError : () => {
+//       console.log('Google Login Failed');
+//     }
+//   });
+//   return googleLogin;
+// }
 
 export default function App() {
 
@@ -106,6 +135,9 @@ export default function App() {
 
   return (
     <>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+
+   
     <BrowserRouter>
     <Message />
       <Routes>
@@ -127,6 +159,7 @@ export default function App() {
         
       </Routes>
     </BrowserRouter>
+     </GoogleOAuthProvider>
     </>
   );
 }

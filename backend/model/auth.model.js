@@ -13,6 +13,11 @@ const userScheme = new mongoose.Schema({
   pass : {
     type : String,
     required : true
+  },
+  googleId : {
+    type : String,
+    unique : true,
+    sparse : true
   }
 }, {timestamps : true});
 

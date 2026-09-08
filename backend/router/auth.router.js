@@ -1,5 +1,5 @@
 import express from 'express';
-import { login, signUp, Logout } from '../controller/auth.controller.js';
+import { login, signUp, Logout, googleLogin } from '../controller/auth.controller.js';
 import authMiddleware from '../middlewares/auth.middleware.js';
 authMiddleware
 const router = express.Router();
@@ -11,6 +11,7 @@ router.get('/checkauth', authMiddleware, (req, res) => {
     user : req.user
   })
 });
-router.post('/logout', Logout)
+router.post('/logout', Logout);
+router.post('/google', googleLogin);
 
 export default router;

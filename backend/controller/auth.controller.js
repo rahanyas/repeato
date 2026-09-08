@@ -2,7 +2,7 @@ import { passHashing, verifyPass } from "../helpers/passHash.helpers.js";
 import isValid from '../helpers/credentials.helpers.js';
 import userModal from "../model/auth.model.js";
 import createToken from "../helpers/tokenCreation.js";
-import jwt from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
 
 export const signUp = async (req, res) => {
   try {
@@ -83,6 +83,65 @@ export const login = async (req, res) => {
   }
 };
 
+export const googleLogin = async (req, res) => {
+  try {
+    const client = new OAuth2Client(process.env.OAUTH_CLIENT_ID);
+
+    const {credential} = req.body;
+
+    if(!credential) {
+      return res.status(400).json({msg : 'Google Credential is missing'})
+    };
+
+    const ticket = await client.verifyIdToken({
+      idToken : credential,
+      audience : process.env.OAUTH_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();
+
+    const {
+      sub : googleId,
+      email,
+      name
+    } = payload;
+
+    if(!googleId || !email){
+      return res.status(400).json({
+        msg : 'Invalid google accoutn information'
+      });
+    };
+
+    let user = await userModal.findOne({
+      $or : [
+        {googleId},
+        {email}
+      ]
+    });
+
+    if(!user){
+      user  = await userModal.create({
+        userName : name,
+        email,
+        googleId
+      });
+    }else if(!user.googleId){
+      user.googleId = googleId;
+      await user.save();
+    };
+
+    createToken(user._id, res);
+
+    return res.status(200).json({
+      msg : 'Google Login Successfull'
+    });
+
+  } catch (err) {
+    console.log('error in google login function : ', err);
+    return res.status(500).json({msg : 'google login failed'})
+  }
+}
+
 export const Logout = async (req, res) => {
   try {
     let token = req?.cookies?.token;
@@ -101,4 +160,4 @@ export const Logout = async (req, res) => {
     console.log('error in Logout function : ', err);
     return res.status(500).json({msg : 'Internal Server Error'});
   }
-}
+};

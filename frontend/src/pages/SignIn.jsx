@@ -2,12 +2,12 @@ import{ useState } from "react";
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, Loader2, Layers } from "lucide-react";
 
 
-import GoogleIcon from "../components/shared/GoogleIcon";
+// import GoogleIcon from "../components/shared/GoogleIcon";
 import Stamp from "../components/shared/Stamp";
 
 import axiosInstance from "../utils/axiosWrapper";
 import { useMessage } from "../context/Message.context";
-
+import { GoogleLogin } from '@react-oauth/google'
 /**
  * Params:
  * - initialMode: "signin" | "signup" — which tab to open on
@@ -18,13 +18,13 @@ import { useMessage } from "../context/Message.context";
 
 
 
-export default function SignUpPage({ initialMode = "signin", onAuthenticated, onBack, onGoogleAuth }) {
+export default function SignUpPage({ initialMode = "signin", onAuthenticated, onBack }) {
   const [mode, setMode] = useState(initialMode);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const isSignUp = mode === "signup";
 
-  const { showMessage, message } = useMessage();
+  const { showMessage } = useMessage();
 
   const [data, setData] = useState({
     name : '',
@@ -150,14 +150,58 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
             </p>
 
             {/* Google button */}
-            <button
+            {/* <button
               type="button"
               onClick={onGoogleAuth}
               className="w-full flex items-center justify-center gap-3 border border-stone-300 bg-white text-stone-700 text-sm font-medium py-2.5 sm:py-3 rounded-md hover:bg-stone-50 hover:border-stone-400 transition-colors"
             >
               <GoogleIcon />
               {isSignUp ? "Sign up with Google" : "Continue with Google"}
-            </button>
+            </button> */}
+<div className="w-full flex justify-center">
+  <GoogleLogin
+    onSuccess={async (credentialResponse) => {
+      try {
+        console.log("Google credential received");
+
+        const res = await axiosInstance.post(
+          "/api/auth/google",
+          {
+            credential: credentialResponse.credential
+          },
+          {
+            withCredentials: true
+          }
+        );
+
+        console.log("Google backend response:", res);
+
+        if (res.status === 200 || res.status === 201) {
+          onAuthenticated?.();
+        }
+
+      } catch (err) {
+        console.error(
+          "Google authentication error:",
+          err.response?.data || err
+        );
+
+        showMessage(
+          err.response?.data?.msg || "Google login failed",
+          "error"
+        );
+      }
+    }}
+    onError={() => {
+      console.log("Google Login Failed");
+
+      showMessage(
+        "Google login failed",
+        "error"
+      );
+    }}
+  />
+</div>
 
             {/* Divider */}
             <div className="flex items-center gap-3 my-6">
