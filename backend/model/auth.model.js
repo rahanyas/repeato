@@ -12,7 +12,9 @@ const userScheme = new mongoose.Schema({
   },
   pass : {
     type : String,
-    required : true
+    required : function(){
+      return !this.googleId
+    }
   },
   googleId : {
     type : String,
