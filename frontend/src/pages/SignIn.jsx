@@ -47,7 +47,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
     try {
       const {pass} = data;
 
-      if(pass.length <= 8){
+      if(pass.length < 8){
         showMessage('Password Must Be 8 charecter Long...', 'error');
         return
       }
@@ -168,16 +168,13 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
           "/api/auth/google",
           {
             credential: credentialResponse.credential
-          },
-          {
-            withCredentials: true
           }
         );
 
         console.log("Google backend response:", res);
 
         if (res.status === 200 || res.status === 201) {
-          onAuthenticated?.();
+         onAuthenticated?.();
         }
 
       } catch (err) {

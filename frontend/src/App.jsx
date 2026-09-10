@@ -33,7 +33,7 @@ function SiginInRoute({onAuthenticated}){
   const navigate = useNavigate();
 
  const handleAuthenticated = async () => {
-  const success = onAuthenticated();
+  const success = await onAuthenticated();
 
   if(success){
     navigate('/app')
@@ -96,7 +96,7 @@ export default function App() {
     } catch (err) {
       console.log('err in checkAuth : ', err);
       setLogedIn(false)
-      showMessage(err?.data?.msg ||'Please Login');
+      showMessage(err?.response?.msg ||'Please Login');
       setUser(null);
       return false
     }finally{
