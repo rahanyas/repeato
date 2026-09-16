@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const PORT  = process.env.PORT || 8000;
 const db_uri = process.env.DB_URI;
+
 const baseUrl = process.env.NODE_DEV === 'dev' ? process.env.DEV_API : process.env.PROD_API;
 console.log(baseUrl);
 

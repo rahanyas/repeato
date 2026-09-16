@@ -12,9 +12,16 @@ export default function createToken(userId, res){
       return res.status(400).json({msg : 'token creation failed'});
     };
 
-    res.cookie("token", token, {
+    // res.cookie("token", token, {
+    //   secure : process.env.NODE_DEV !== 'dev',
+    //   sameSite : process.env.NODE_DEV !== 'dev' ? 'None' : 'Lax',
+    //   httpOnly : true,
+    //   maxAge : 2 * 24 * 60 * 60*  1000,
+    // });
+
+      res.cookie("token", token, {
       secure : process.env.NODE_DEV !== 'dev',
-      sameSite : process.env.NODE_DEV !== 'dev' ? 'None' : 'Lax',
+      sameSite : 'Lax',
       httpOnly : true,
       maxAge : 2 * 24 * 60 * 60*  1000,
     });
