@@ -167,7 +167,7 @@ export default function SignUpPage({ initialMode = "signin", onAuthenticated, on
         const res = await axiosInstance.post(
           "/api/auth/google",
           {
-            credential: credentialResponse.credential
+            credential: credentialResponse.credential,            
           }
         );
 

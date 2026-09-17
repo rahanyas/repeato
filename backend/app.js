@@ -3,7 +3,7 @@ import cors from  'cors';
 import authRouter from './router/auth.router.js';
 import connect_db from './utils/db_connection.js';
 import cookieParser from 'cookie-parser';
-
+import paperRouter from './router/paper.router.js'
 
 const app = express();
 const PORT  = process.env.PORT || 8000;
@@ -24,6 +24,7 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
+app.use('/api/papers', paperRouter)
 
 app.listen(PORT, () => {
   console.log('server running on port : ', PORT)

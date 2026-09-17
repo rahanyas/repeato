@@ -11,6 +11,8 @@ import {
   Trash2,
 } from "lucide-react";
 
+import axiosInstance from "../../utils/axiosWrapper";
+
 const MIN_PAPERS_FOR_PREDICTION = 3;
 
 export default function UploadView() {
@@ -31,7 +33,7 @@ export default function UploadView() {
     0
   );
 
-  const handleFile = (file) => {
+  const handleFile = async (file) => {
     if (!file) return;
 
     setError("");
@@ -59,20 +61,52 @@ export default function UploadView() {
         id,
         name: file.name,
         status: "processing",
+        text : "",
+        pages : 0
       },
     ]);
 
-    // Temporary parsing simulation.
-    // Replace this with the real upload/extraction API later.
-    window.setTimeout(() => {
-      setPapers((current) =>
-        current.map((paper) =>
-          paper.id === id
-            ? { ...paper, status: "done" }
-            : paper
-        )
-      );
-    }, 900);
+        try {
+      const formData = new FormData();
+
+      formData.append("paper", file);
+      const response = await axiosInstance.post('/api/papers/upload', formData, {
+        headers : {
+          "Content-Type" : "multipart/form-data",
+        },
+      });
+
+      const {paper} = response.data;
+
+      setPapers((current) => (
+        current.map((item) => (
+          item.id === id ? {
+            ...item,
+            status : "done",
+            text : paper.text,
+            pages : paper.pages,
+          }
+          : item
+        ))
+      ));
+    } catch (err) {
+      console.error('Paper upload failed : ', err);
+      const message = err?.response?.data?.msg || "Failed to process this question paper.";
+
+      setPapers(current => (
+        current.map(item => (
+          item.id === id ? {
+            ...item,
+            status : 'error',
+            error : message
+          }
+          : item
+        ))
+      ));
+
+      setError(message)
+    }
+
   };
 
   const handleInputChange = (event) => {
@@ -187,23 +221,31 @@ export default function UploadView() {
               {/* Status + Remove */}
               <div className="flex items-center gap-3 shrink-0">
 
-                {paper.status === "done" ? (
-                  <span className="flex items-center gap-1.5 text-xs font-mono text-teal-700">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
+{paper.status === "done" ? (
+  <span className="flex items-center gap-1.5 text-xs font-mono text-teal-700">
+    <CheckCircle2 className="w-3.5 h-3.5" />
 
-                    <span className="hidden sm:inline">
-                      parsed
-                    </span>
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-1.5 text-xs font-mono text-amber-600">
-                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+    <span className="hidden sm:inline">
+      parsed
+    </span>
+  </span>
+) : paper.status === "error" ? (
+  <span className="flex items-center gap-1.5 text-xs font-mono text-red-600">
+    <AlertCircle className="w-3.5 h-3.5" />
 
-                    <span className="hidden sm:inline">
-                      extracting questions…
-                    </span>
-                  </span>
-                )}
+    <span className="hidden sm:inline">
+      failed
+    </span>
+  </span>
+) : (
+  <span className="flex items-center gap-1.5 text-xs font-mono text-amber-600">
+    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+
+    <span className="hidden sm:inline">
+      extracting questions…
+    </span>
+  </span>
+)}
 
                 {/* Remove */}
                 <button
